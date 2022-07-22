@@ -20,7 +20,7 @@ public class ContentsController {
 
     // 게시글 조회
     @GetMapping("/api/contents")
-    public List<ContentsResponseDto> getContents() {
+    public List<Contents> getContents() {
         return contentsService.getContents();
     }
 

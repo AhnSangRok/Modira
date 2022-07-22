@@ -8,6 +8,5 @@ import java.util.List;
 
 
 public interface ContentsRepository extends JpaRepository<Contents, Long> {
-    List<ContentsResponseDto> findAllBy();
     List<ContentsResponseDto> findByLocationName(String localName);
 }

@@ -47,8 +47,8 @@ public class ContentsService {
     }
 
     // 게시글 조회
-    public List<ContentsResponseDto> getContents() {
-        return contentsRepository.findAllBy();
+    public List<Contents> getContents() {
+        return contentsRepository.findAll();
     }
 
     // 게시글 디테일 조회
