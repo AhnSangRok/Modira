@@ -4,7 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class ContentsRequestDto {
-    private String title;
-    private String name;
-    private String contents;
+    String title;
+    String nickName;
+    String imageUrl;
+    String contents;
+    int partyNum;
+    int joinNum;
+    boolean done;
+    String locationName;
 }

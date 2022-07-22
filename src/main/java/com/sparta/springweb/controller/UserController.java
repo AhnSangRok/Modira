@@ -33,12 +33,12 @@ public class UserController {
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
     public String registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
-        String res = userService.registerUser(requestDto);
-        if (res.equals("")) {
+        String result = userService.registerUser(requestDto);
+        if (result.equals("")) {
             return "회원가입 성공";
         } else {
 //            model.addAttribute("errortext", userService.registerUser(requestDto));
-            return res;
+            return result;
         }
     }
 }
