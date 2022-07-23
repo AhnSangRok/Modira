@@ -20,26 +20,29 @@ public class Posts extends Timestamped {
     private Long id;
 
     // 반드시 값을 가지도록 합니다.
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String userName;
 
-    @Column
+    @Column(nullable = false)
     private String contents;
 
-    @Column
+    @Column(nullable = false)
+    private String imageUrl;
+
+    @Column(nullable = false)
     private String locationName;
 
-    @Column
+    @Column(nullable = false)
     private int partyNum;
 
     @Column
-    private int joinNum;
+    private int joinNum = 0;
 
     @Column
-    private boolean dones;
+    private boolean dones = false;
 
     public Posts(String title, String username, String contents) {
         this.title = title;
@@ -54,6 +57,7 @@ public class Posts extends Timestamped {
         this.contents = requestDto.getContents();
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
+        this.imageUrl = requestDto.getImageUrl();
     }
 
     public void update(postRequestDto requestDto, String userName) {
@@ -62,6 +66,7 @@ public class Posts extends Timestamped {
         this.contents = requestDto.getContents();
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
+        this.imageUrl = requestDto.getImageUrl();
     }
 
     public Posts(postRequestDto requestDto, String username, String contents) {

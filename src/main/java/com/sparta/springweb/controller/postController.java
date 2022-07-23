@@ -57,7 +57,7 @@ public class postController {
         return posts;
     }
 
-    // 댓글 삭제
+    // 게시글 삭제
     @DeleteMapping("/api/post/delete/{id}")
     public void deletecontents(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         // 로그인 되어 있는 ID
