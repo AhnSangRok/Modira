@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     private String secretKey;
 
     // 토큰 유효시간 5분 설정 (1000L = 1초, 1000L * 60 = 1분)
-    private static final long TOKEN_VALID_TIME = 1000L * 60 * 5;
+    private static final long TOKEN_VALID_TIME = 1000L * 60 * 30;
 
     private final UserDetailsService userDetailsService;
 
@@ -93,7 +93,7 @@ public class JwtTokenProvider {
             Date now = new Date();
                     claims
                     .getBody()
-                    .setExpiration(new Date(now.getTime() - (1000L * 60 * 5)));
+                    .setExpiration(new Date(now.getTime() - (1000L * 60 * 30)));
         } catch (Exception e) {
             return false;
         }
