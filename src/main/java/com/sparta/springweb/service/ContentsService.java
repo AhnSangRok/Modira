@@ -21,9 +21,9 @@ public class ContentsService {
     // 게시글 작성
     @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
     public Contents createContents(ContentsRequestDto requestDto, String username) {
-        Contents contents1 = checkAttack(requestDto, username);
-        if (contents1 != null) return contents1;
-        // 요청받은 DTO 로 DB에 저장할 객체 만들기
+//        Contents contents1 = checkAttack(requestDto, username);
+//        if (contents1 != null) return contents1;
+//        // 요청받은 DTO 로 DB에 저장할 객체 만들기
         Contents contents = new Contents(requestDto, username);
         contentsRepository.save(contents);
         return contents;
@@ -58,12 +58,13 @@ public class ContentsService {
         return contents;
     }
 
+    // 각 지역별 게시글 조회
     public List<ContentsResponseDto> getLocalContents(String locationName) {
         List<ContentsResponseDto> contentsResponseDtoList = contentsRepository.findByLocationName(locationName);
         return contentsResponseDtoList;
     }
 
-    // 게시글 수정 기능 (사용 안함)
+    // 게시글 수정 기능
     @Transactional
     public Contents update(Long id, ContentsRequestDto requestDto,  String userName, Long userId) {
         Contents contents = contentsRepository.findById(id).orElseThrow(
@@ -71,7 +72,7 @@ public class ContentsService {
         String writer = contents.getNickName();
         Long writerId = contents.getId();
         if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
-            contents.update(requestDto);;
+            contents.update(requestDto, userName);
         }else new IllegalArgumentException("작성한 유저가 아닙니다.");
         return contents;
     }

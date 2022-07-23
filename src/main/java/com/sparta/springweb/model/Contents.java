@@ -21,25 +21,25 @@ public class Contents extends Timestamped {
     private Long id;
 
     // 반드시 값을 가지도록 합니다.
-    @Column(nullable = false)
+    @Column
     private String title;
 
-    @Column(nullable = false)
+    @Column
     private String nickName;
 
-    @Column(nullable = false)
+    @Column
     private String contents;
 
-    @Column(nullable = false)
+    @Column
     private String locationName;
 
-    @Column(nullable = false)
+    @Column
     private int partyNum;
 
-    @Column(nullable = false)
+    @Column
     private int joinNum;
 
-    @Column(nullable = false)
+    @Column
     private boolean done;
 
     public Contents(String title, String username, String contents) {
@@ -48,11 +48,6 @@ public class Contents extends Timestamped {
         this.contents = contents;
     }
 
-    public Contents(ContentsRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.nickName = requestDto.getNickName();
-        this.contents = requestDto.getContents();
-    }
 
     public Contents(ContentsRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
@@ -60,9 +55,9 @@ public class Contents extends Timestamped {
         this.contents = requestDto.getContents();
     }
 
-    public void update(ContentsRequestDto requestDto) {
+    public void update(ContentsRequestDto requestDto, String userName) {
         this.title = requestDto.getTitle();
-        this.nickName = requestDto.getNickName();
+        this.nickName = userName;
         this.contents = requestDto.getContents();
     }
 

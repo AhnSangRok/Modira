@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -27,14 +28,7 @@ public class UserService {
     public Boolean login(LoginRequestDto loginRequestDto){
         User user = userRepository.findByUsername(loginRequestDto.getUsername())
                 .orElse(null);
-        if (user != null) {
-            if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-                return false;
-            }
-        } else {
-            return false;
-        }
-        return true;
+        return user != null && passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword());
     }
 
     // 회원가입
@@ -74,4 +68,10 @@ public class UserService {
         return error;
     }
 
+    // 로그아웃
+    public String logout(HttpServletRequest request) {
+        String header = jwtTokenProvider.resolveToken(request);
+        jwtTokenProvider.invalidateToken(header);
+        return "logout";
+    }
 }

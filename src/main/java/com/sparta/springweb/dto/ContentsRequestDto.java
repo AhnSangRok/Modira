@@ -1,15 +1,14 @@
 package com.sparta.springweb.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class ContentsRequestDto {
     String title;
-    String nickName;
     String imageUrl;
     String contents;
     int partyNum;
-    int joinNum;
-    boolean done;
     String locationName;
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -23,8 +24,7 @@ public class UserController {
     public String login(@RequestBody LoginRequestDto loginRequestDto) {
         if (userService.login(loginRequestDto)) {
             String token = jwtTokenProvider.createToken(loginRequestDto.getUsername());
-            System.out.println(token);
-            return token;
+            return "로그인";
         } else {
             return "닉네임 또는 패스워드를 확인해주세요";
         }
@@ -34,11 +34,13 @@ public class UserController {
     @PostMapping("/user/signup")
     public String registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
         String result = userService.registerUser(requestDto);
-        if (result.equals("")) {
-            return "회원가입 성공";
-        } else {
-//            model.addAttribute("errortext", userService.registerUser(requestDto));
-            return result;
-        }
+        //            model.addAttribute("errortext", userService.registerUser(requestDto));
+        return result.equals("") ? "회원가입 성공" : result;
+    }
+
+    // 로그아웃
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        return userService.logout(request);
     }
 }

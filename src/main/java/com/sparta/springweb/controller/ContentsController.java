@@ -1,6 +1,5 @@
 package com.sparta.springweb.controller;
 
-
 import com.sparta.springweb.dto.ContentsRequestDto;
 import com.sparta.springweb.dto.ContentsResponseDto;
 import com.sparta.springweb.model.Contents;
@@ -39,15 +38,14 @@ public class ContentsController {
 
     // 게시글 작성
     @PostMapping("/api/contents")
+    // @AuthenticationPrincipal 로그인한 사용자의 정보를 파라메터로 받음
     public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         // 로그인 되어 있는 ID의 username
-        if (userDetails != null) {
-            Long userId = userDetails.getUser().getId();
+        if (userDetails != null ) {
             String username = userDetails.getUser().getUsername();
             Contents contents = contentsService.createContents(requestDto, username);
             return contents;
-        }
-        return null;
+        } else return null;
     }
 
     // 게시글 수정
