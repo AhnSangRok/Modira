@@ -1,7 +1,7 @@
 package com.sparta.springweb.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sparta.springweb.model.Contents;
+import com.sparta.springweb.model.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,43 +10,41 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class ContentsResponseDto {
+public class postResponseDto {
     private Long id;
     private String title;
-    private String nickName;
+    private String userName;
     private String contents;
     private String locationName;
-    private int partyNum;
-    private int joinNum;
-    private boolean done;
+    private int partyNum = 0;
+    private int joinNum = 0;
+    private boolean dones = false;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime modifiedAt;
-    private int countReply;
 
-    public ContentsResponseDto(Long id, String title, String nickName, String contents, String locationName, int partyNum, int joinNum, boolean done, LocalDateTime modifiedAt, int countReply) {
+
+    public postResponseDto(Long id, String title, String userName, String contents, String locationName, int partyNum, int joinNum, boolean done, LocalDateTime modifiedAt, int countReply) {
         this.id = id;
         this.title = title;
-        this.nickName = nickName;
+        this.userName = userName;
         this.contents = contents;
         this.locationName = locationName;
         this.partyNum = partyNum;
         this.joinNum = joinNum;
-        this.done = done;
+        this.dones = dones;
         this.modifiedAt = modifiedAt;
-        this.countReply = countReply;
     }
 
     @Builder
-    public ContentsResponseDto(Contents content, int countReply) {
+    public postResponseDto(Posts content, int countReply) {
         this.id = content.getId();
         this.title = content.getTitle();
-        this.nickName = content.getNickName();
+        this.userName = content.getUserName();
         this.contents = content.getContents();
         this.locationName = content.getLocationName();
         this.partyNum = content.getPartyNum();
         this.joinNum = content.getJoinNum();
         this.modifiedAt = content.getModifiedAt();
-        this.done = done;
-        this.countReply = countReply;
+        this.dones = dones;
     }
 }

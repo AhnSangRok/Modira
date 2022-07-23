@@ -24,7 +24,7 @@ public class UserController {
     public String login(@RequestBody LoginRequestDto loginRequestDto) {
         if (userService.login(loginRequestDto)) {
             String token = jwtTokenProvider.createToken(loginRequestDto.getUsername());
-            return "로그인";
+            return token;
         } else {
             return "닉네임 또는 패스워드를 확인해주세요";
         }

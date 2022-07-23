@@ -1,12 +1,12 @@
 package com.sparta.springweb.repository;
 
-import com.sparta.springweb.dto.ContentsResponseDto;
-import com.sparta.springweb.model.Contents;
+import com.sparta.springweb.dto.postResponseDto;
+import com.sparta.springweb.model.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 
-public interface ContentsRepository extends JpaRepository<Contents, Long> {
-    List<ContentsResponseDto> findByLocationName(String localName);
+public interface ContentsRepository extends JpaRepository<Posts, Long> {
+    List<postResponseDto> findByLocationName(String localName);
 }
