@@ -17,18 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final 필드 생성자 생성
 @Component
 // 토큰 생성, 유효성 검사
 public class JwtTokenProvider {
 
     // secretKey 와 같은 민감정보는 숨기는 것이 좋다. (이것은 연습이라서 노출함)
+    // @Value secretKey값 매핑
     @Value("K7kjHSF345h345S86F3A2erGB98iWIad")
     private String secretKey;
 
-    // 토큰 유효시간 5분 설정 (1000L = 1초, 1000L * 60 = 1분)
+    // 토큰 유효시간 30분 설정 (1000L = 1초, 1000L * 60 = 1분)
     private static final long TOKEN_VALID_TIME = 1000L * 60 * 30;
 
+    //UserDetailsService 불러와 객체를 생성하여 UserDetailsService 연결
     private final UserDetailsService userDetailsService;
 
     // 객체 초기화, secretKey 를 Base64로 인코딩한다.
@@ -39,6 +41,7 @@ public class JwtTokenProvider {
 
     // JWT 토큰 생성(로그인 서비스에 사용)
     public String createToken(String userPk) {
+        // primeKey 로 userName 을 저장
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
         Date now = new Date();
         return Jwts.builder()
@@ -84,7 +87,7 @@ public class JwtTokenProvider {
         }
     }
 
-    // 토큰 파기
+    // 토큰 파기 (만료일자 0으로 변경)
     public boolean invalidateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser()

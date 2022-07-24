@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
 @Entity // DB 테이블 역할을 합니다.
+// Timestamped 상속
 public class Posts extends Timestamped {
 
     // ID가 자동으로 생성 및 증가합니다.
@@ -44,13 +45,19 @@ public class Posts extends Timestamped {
     @Column
     private boolean dones = false;
 
+    // xxs 공격 판단 매소드 객체
     public Posts(String title, String username, String contents) {
         this.title = title;
         this.userName = username;
         this.contents = contents;
     }
+    public Posts(postRequestDto requestDto, String username, String contents) {
+        this.title = requestDto.getTitle();
+        this.userName = username;
+        this.contents = contents;
+    }
 
-
+    // 게시글 작성 메소드 객체
     public Posts(postRequestDto requestDto, String userName) {
         this.title = requestDto.getTitle();
         this.userName = userName;
@@ -60,6 +67,7 @@ public class Posts extends Timestamped {
         this.imageUrl = requestDto.getImageUrl();
     }
 
+    // update 메소드 객체
     public void update(postRequestDto requestDto, String userName) {
         this.title = requestDto.getTitle();
         this.userName = userName;
@@ -67,12 +75,6 @@ public class Posts extends Timestamped {
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
         this.imageUrl = requestDto.getImageUrl();
-    }
-
-    public Posts(postRequestDto requestDto, String username, String contents) {
-        this.title = requestDto.getTitle();
-        this.userName = username;
-        this.contents = contents;
     }
 
     @Getter // private를 조회하기 위해 사용
