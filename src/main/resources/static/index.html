@@ -22,7 +22,7 @@
             $('#cards-box').empty();
             $.ajax({
                 type: "GET",
-                url: "/api/contents",
+                url: "/api/posts",
                 data: {},
                 success: function (response) {
                     for (let i = 0; i < response.length; i++) {
@@ -30,21 +30,21 @@
                         let id = post.id;
                         let name = post.name;
                         let title = post.title;
-                        let contents = post.contents;
+                        let posts = post.posts;
                         let modifiedAt = post.modifiedAt;
                         let countReply = post.countReply;
-                        addHTML(id, name, title, contents, modifiedAt, countReply);
+                        addHTML(id, name, title, posts, modifiedAt, countReply);
                     }
                 }
             });
         }
 
-        function addHTML(id, name, title, contents, modifiedAt, countReply) {
-            let tempHtml = makeMessage(id, name, title, contents, modifiedAt, countReply);
+        function addHTML(id, name, title, posts, modifiedAt, countReply) {
+            let tempHtml = makeMessage(id, name, title, posts, modifiedAt, countReply);
             $('#cards-box').append(tempHtml);
         }
 
-        function makeMessage(id, name, title, contents, modifiedAt, countReply) {
+        function makeMessage(id, name, title, posts, modifiedAt, countReply) {
             return `<a href="detail.html?id=${id}">
                         <div class="card">
                             <div class="metadata">
@@ -56,8 +56,8 @@
                                </div>
                             </div>
                             <h2 class='title' id="${id}-title">"${title}"</h2>
-                            <div class="contents" id="${id}-contents" >
-                               ${contents}
+                            <div class="posts" id="${id}-posts" >
+                               ${posts}
                             </div>
                             <div class="countReply">
                             댓글 : ${countReply}
@@ -89,7 +89,7 @@
             height: 300px;
         }
 
-        #contents {
+        #posts {
             width: 538px;
         }
 
@@ -219,7 +219,7 @@
         /*.card .metadata .name {*/
         /*}*/
 
-        .contents {
+        .posts {
             font-size: 21px;
             padding: 0px 23px;
             word-wrap: break-word;
@@ -232,11 +232,11 @@
             text-align: right;
         }
 
-        .contents div.edit {
+        .posts div.edit {
             display: none;
         }
 
-        .contents textarea.te-edit {
+        .posts textarea.te-edit {
             border-right: none;
             border-top: none;
             border-left: none;
@@ -342,8 +342,8 @@
                 </div>
             </div>
             <h2>asd</h2>
-            <div class="contents">
-                <div id="1-contents" class="text">
+            <div class="posts">
+                <div id="1-posts" class="text">
                     dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
                 </div>
             </div>

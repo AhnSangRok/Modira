@@ -24,7 +24,7 @@
             let idx = location.href.split("id=")[1];
             $.ajax({
                 type: "GET",
-                url: `/api/contents/${idx}`,
+                url: `/api/posts/${idx}`,
                 data: {},
                 success: function (response) {
                     console.log(response);
@@ -32,21 +32,21 @@
                     let id = post.id;
                     let name = post.name;
                     let title = post.title;
-                    let contents = post.contents;
+                    let posts = post.posts;
                     let modifiedAt = post.modifiedAt;
-                    addHTML(id, name, title, contents, modifiedAt);
+                    addHTML(id, name, title, posts, modifiedAt);
                 }
             });
         }
 
         // 불러온 게시글을 html에 붙여줍니다.
-        function addHTML(id, name, title, contents, modifiedAt) {
-            let tempHtml = makeMessage(id, name, title, contents, modifiedAt);
+        function addHTML(id, name, title, posts, modifiedAt) {
+            let tempHtml = makeMessage(id, name, title, posts, modifiedAt);
             $('#cards-box').append(tempHtml);
         }
 
         // 게시글 형태를 만들어줍니다.
-        function makeMessage(id, name, title, contents, modifiedAt) {
+        function makeMessage(id, name, title, posts, modifiedAt) {
             let loginUsername = [[${username}]];
             let hide = ""
             if (loginUsername != name) {
@@ -62,8 +62,8 @@
                            </div>
                         </div>
                     <h2 class='title' id="${id}-title">"${title}"</h2>
-                        <div class="contents" id="${id}-contents" >
-                           ${contents}
+                        <div class="posts" id="${id}-posts" >
+                           ${posts}
                         </div>
                         <div class="footer ${hide}">
                             <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
@@ -77,7 +77,7 @@
                 return}
             $.ajax({
                 type: "DELETE",
-                url: `/api/contents/${id}`,
+                url: `/api/posts/${id}`,
                 success: function (response) {
                     alert('메시지 삭제에 성공하였습니다.');
                     window.location.replace("/");
@@ -129,7 +129,7 @@
                                ${modifiedAt}
                            </div>
                         </div>
-                        <div class="contents" id="${id}-reply" >
+                        <div class="posts" id="${id}-reply" >
                            ${reply}
                         </div>
                         <div id="${id}-editarea" class="edit">
@@ -146,8 +146,8 @@
         // 수정 버튼을 눌렀을 때, 기존 작성 내용을 수정박스(textarea)에 전달합니다.
         function editPost(id) {
             showEdits(id);
-            let contents = $(`#${id}-reply`).text().trim();
-            $(`#${id}-textarea`).val(contents);
+            let posts = $(`#${id}-reply`).text().trim();
+            $(`#${id}-textarea`).val(posts);
         }
 
         // 숨길 버튼을 숨기고, 나타낼 버튼을 나타냅니다.
@@ -162,7 +162,7 @@
 
         // 수정된 댓글을 put 요청 보내 update 합니다.
         function submitEdit(id) {
-            // 1. 작성 대상 메모 contents 를 확인합니다
+            // 1. 작성 대상 메모 posts 를 확인합니다
             let reply = $(`#${id}-textarea`).val().trim();
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
             if (isValidContents(reply) == false) {
@@ -184,8 +184,8 @@
         }
 
         // 글이 정상인지 확인
-        function isValidContents(contents) {
-            if (contents == '') {
+        function isValidContents(posts) {
+            if (posts == '') {
                 alert('댓글 내용을 입력해주세요');
                 return false;
             }
@@ -262,7 +262,7 @@
             height: 300px;
         }
 
-        #contents {
+        #posts {
             width: 538px;
         }
 
@@ -397,17 +397,17 @@
         /*.card .metadata .name {*/
         /*}*/
 
-        .contents {
+        .posts {
             padding: 0px 23px;
             word-wrap: break-word;
             word-break: break-all;
         }
 
-        .contents div.edit {
+        .posts div.edit {
             display: none;
         }
 
-        .contents textarea.te-edit {
+        .posts textarea.te-edit {
             border-right: none;
             border-top: none;
             border-left: none;
@@ -522,11 +522,11 @@
                     anonymous
                 </div>
             </div>
-            <!-- contents 조회/수정 영역-->
+            <!-- posts 조회/수정 영역-->
 
             <h2>asd</h2>
-            <div class="contents">
-                <div id="1-contents" class="text">
+            <div class="posts">
+                <div id="1-posts" class="text">
                     dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
                 </div>
                 <div id="1-editarea" class="edit">
@@ -556,8 +556,8 @@
                     ${modifiedAt}
                 </div>
             </div>
-            <div class="contents" id="${id}-contents">
-                ${contents}
+            <div class="posts" id="${id}-posts">
+                ${posts}
             </div>
             </a>
             <div class="footer">

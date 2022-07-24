@@ -27,8 +27,8 @@
                 }
             });
         }
-        function isValidContents(contents) {
-            if (contents == '') {
+        function isValidContents(posts) {
+            if (posts == '') {
                 alert('내용을 입력해주세요');
                 return false;
             }
@@ -36,19 +36,19 @@
         }
 
         function writePost() {
-            let contents = $('#contents').val();
+            let posts = $('#posts').val();
             let title = $('#title').val();
-            if (isValidContents(contents) == false) {
+            if (isValidContents(posts) == false) {
                 return;
             }
             if (isValidContents(title) == false) {
                 return;
             }
 
-            let data = {'title': title, 'contents': contents};
+            let data = {'title': title, 'posts': posts};
             $.ajax({
                 type: "POST",
-                url: "/api/contents",
+                url: "/api/posts",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -83,7 +83,7 @@
             margin: 10px auto;
         }
 
-        #contents {
+        #posts {
             width: 538px;
         }
 
@@ -201,11 +201,11 @@
             margin-left: 20px;
         }
 
-        .contents div.edit {
+        .posts div.edit {
             display: none;
         }
 
-        .contents textarea.te-edit {
+        .posts textarea.te-edit {
             border-right: none;
             border-top: none;
             border-left: none;
@@ -259,7 +259,7 @@
         <div class="form-floating mb-3">
             <input type="title" class="form-control" id="title" placeholder="제 목">
         </div>
-        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="posts" id="posts" cols="30"
                   rows="10"></textarea>
         <img src="images/send.png" alt="" onclick="writePost()">
     </div>
