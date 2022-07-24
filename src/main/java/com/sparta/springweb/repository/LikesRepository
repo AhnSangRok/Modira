@@ -1,0 +1,22 @@
+package com.sparta.springweb.repository;
+
+import com.sparta.springweb.model.Contents;
+import com.sparta.springweb.model.Likes;
+import com.sparta.springweb.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+public interface LikesRepository extends JpaRepository<Likes, Long> {
+    Likes findLikesByContentsAndUser(Contents contents, User user);
+    int countByContentsId(Long Id);
+
+    @Modifying
+    @Query(value = "INSERT INTO likes(contents_id, user_id) VALUES(:contentsId, :userId)", nativeQuery = true)
+    void likes(Long contentsId, Long userId);
+
+    @Modifying
+    @Query(value = "DELETE FROM likes WHERE contents_id = contentsId AND user_id = : userId", nativeQuery = true)
+    void unlikes(Long contentsId, Long userId);
+
+}
