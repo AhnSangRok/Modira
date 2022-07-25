@@ -26,7 +26,7 @@ public class UserService {
 
     // 로그인
     public Boolean login(LoginRequestDto loginRequestDto){
-        // LoginRequestDto 에 있는 UserNAme 을 통해 user 정보 불러오기
+        // LoginRequestDto 에 있는 UserName 을 통해 user 정보 불러오기
         User user = userRepository.findByUsername(loginRequestDto.getUsername())
                 .orElse(null);
         // user 정보가 비었거나 입력된 password 가 저장되어 있는 password 와 다르다면 false

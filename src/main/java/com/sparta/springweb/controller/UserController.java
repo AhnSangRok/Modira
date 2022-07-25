@@ -48,7 +48,7 @@ public class UserController {
     }
 
     // 로그아웃
-    @PostMapping("/logout")
+    @PostMapping("/user/logout")
     public String logout(HttpServletRequest request) {
         //UserService에 함수를 만들어줌
         return userService.logout(request);
