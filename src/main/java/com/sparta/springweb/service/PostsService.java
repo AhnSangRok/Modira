@@ -50,21 +50,21 @@ public class PostsService {
         return null;
     }
 
-    // 게시글 조회
-//    public List<Posts> getContents() {
-////        return postsRepository.findAll();
-//        return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
-//    }
-    public Page<Posts> getContents(int page, int size, String sortBy, boolean isAsc) {
-        // 페이징 및 정렬
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        // 정렬 direction 과 정렬 항목을 파라미터로 받음
-        Sort sort = Sort.by(direction, sortBy);
-        // Pageable pageable = new PageRequest(page, size, sort)와 동일
-        Pageable pageable = PageRequest.of(page, size, sort);
-        //PostRepository에 함수 생성
-        return postsRepository.findAll(pageable);
+//     게시글 조회
+    public List<Posts> getContents() {
+//        return postsRepository.findAll();
+        return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
     }
+//    public Page<Posts> getContents(int page, int size, String sortBy, boolean isAsc) {
+//        // 페이징 및 정렬
+//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+//        // 정렬 direction 과 정렬 항목을 파라미터로 받음
+//        Sort sort = Sort.by(direction, sortBy);
+//        // Pageable pageable = new PageRequest(page, size, sort)와 동일
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        //PostRepository에 함수 생성
+//        return postsRepository.findAll(pageable);
+//    }
 
 
     // 게시글 디테일 조회
@@ -72,8 +72,8 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 ()->new IllegalArgumentException("id가 존재하지 않습니다."));
 
-        int count = likesRepository.countByPostsId(id);
-        posts.updateLikesCount(count);
+//        int count = likesRepository.countByPostsId(id);
+//        posts.updateLikesCount(count);
         return posts;
     }
 

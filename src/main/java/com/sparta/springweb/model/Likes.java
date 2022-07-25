@@ -1,6 +1,7 @@
 package com.sparta.springweb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sparta.springweb.dto.LikeDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,21 +14,24 @@ public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @JoinColumn(name = "posts_id")
-    @ManyToOne
-    private Posts posts;
+//    @JoinColumn(name = "posts_id")
+//    @ManyToOne
+//    private Posts posts;
+//
+//    @JoinColumn(name = "user_id")
+//    @JsonIgnoreProperties({"postsList"})
+//    @ManyToOne
+//    private User user;
+    @Column(nullable = false)
+    private Long postId;
+    @Column(nullable = false)
+    private String userName;
 
-    @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"postsList"})
-    @ManyToOne
-    private User user;
-
-
-    public Likes(Posts posts, User user){
-        this.posts = posts;
-        this.user = user;
+    public Likes(LikeDto likeDto){
+        this.postId = likeDto.getPostId();
+        this.userName = likeDto.getUserName();
     }
 
 }
