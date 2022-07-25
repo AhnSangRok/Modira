@@ -264,6 +264,24 @@
         <img src="images/send.png" alt="" onclick="writePost()">
     </div>
 </div>
+<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<div id="see-area">
+    <div className="pagination">
+        정렬:
+        <select id="sorting" onChange="showProduct()">
+            <option value="id">ID</option>
+            <option value="title">상품명</option>
+            <option value="lprice">최저가</option>
+        </select>
+        <input type="radio" name="isAsc" value="true" onChange="showProduct()" checked/> 오름차순
+        <input type="radio" name="isAsc" value="false" onChange="showProduct()"/> 내림차순
+    </div>
+    <div id="pagination" className="pagination"></div>
+    <ul id="product-container">
+    </ul>
+</div>
 
+
+</div>
 </body>
 </html>

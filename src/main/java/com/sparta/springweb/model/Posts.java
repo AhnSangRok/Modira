@@ -51,7 +51,7 @@ public class Posts extends Timestamped {
     private User user;
 
     @Transient
-    private long likesCount;
+    private int likesCount;
 
     @Transient
     private boolean likesState;

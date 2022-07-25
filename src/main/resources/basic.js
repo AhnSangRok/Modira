@@ -149,3 +149,46 @@
 //         }
 //     })
 // }
+
+
+////////////////////////////////////////////////
+function showProduct() {
+    var isAdmin = false;
+    if ($('#admin').length === 1) {
+        isAdmin = true
+    }
+
+    var sorting = $("#sorting option:selected").val();
+    var isAsc = $(':radio[name="isAsc"]:checked').val();
+    console.log(sorting, isAsc);
+
+    $('#product-container').empty();
+    $('#search-result-box').empty();
+    $('#pagination').pagination({
+        dataSource: isAdmin ? `/api/admin/products?sortBy=${sorting}&isAsc=${isAsc}` : `/api/products?sortBy=${sorting}&isAsc=${isAsc}`,
+        locator: 'content',
+        alias: {
+            pageNumber: 'page',
+            pageSize: 'size'
+        },
+        totalNumberLocator: (response) => {
+            return response.totalElements;
+        },
+        pageSize: 10,
+        showPrevious: true,
+        showNext: true,
+        ajax: {
+            beforeSend: function() {
+                $('#product-container').html('상품 불러오는 중...');
+            }
+        },
+        callback: function(data, pagination) {
+            $('#product-container').empty();
+            for (let i = 0; i < data.length; i++) {
+                let product = data[i];
+                let tempHtml = addProductItem(product);
+                $('#product-container').append(tempHtml);
+            }
+        }
+    });
+}

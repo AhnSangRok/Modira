@@ -50,7 +50,7 @@ public class PostsService {
         return null;
     }
 
-//     게시글 조회
+    //     게시글 조회
     public List<Posts> getContents() {
 //        return postsRepository.findAll();
         return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
