@@ -1,14 +1,10 @@
 package com.sparta.springweb.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sparta.springweb.model.Posts;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
 public class postResponseDto {
     private Long id;
@@ -33,18 +29,5 @@ public class postResponseDto {
         this.joinNum = joinNum;
         this.dones = dones;
         this.modifiedAt = modifiedAt;
-    }
-
-    @Builder
-    public postResponseDto(Posts content, int countReply) {
-        this.id = content.getId();
-        this.title = content.getTitle();
-        this.userName = content.getUserName();
-        this.contents = content.getContents();
-        this.locationName = content.getLocationName();
-        this.partyNum = content.getPartyNum();
-        this.joinNum = content.getJoinNum();
-        this.modifiedAt = content.getModifiedAt();
-        this.dones = dones;
     }
 }

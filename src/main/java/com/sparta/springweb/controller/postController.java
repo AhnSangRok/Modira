@@ -18,7 +18,7 @@ public class postController {
     private final PostService postService;
 
     // 게시글 조회
-    @GetMapping("/api/contents")
+    @GetMapping("/api/post")
     public Page<Posts> getContents(
             @RequestParam int page, // 페이지 번호
             @RequestParam int size, // 한 페이지에 보여줄 게시물 개수
@@ -26,13 +26,12 @@ public class postController {
             @RequestParam boolean isAsc // true = 오름차순, false = 내림차순
     ) {
         //PostService에 함수를 만들어줌
-        // 프론트에서 받아오는 페이지 번호 값은 1부터 시작이므로 -1 을 해주어 변환함
-        page -= 1;
+        page -= 1; // 프론트에서 받아오는 페이지 번호 값은 1부터 시작이므로 -1 을 해주어 변환함
         return postService.getContents(page, size, sortBy, isAsc);
     }
 
     // 게시글 디테일 조회
-    @GetMapping("/api/contents/{id}")
+    @GetMapping("/api/post/{id}")
     // @PathVariable {템플릿 변수} 와 동일한 이름을 갖는 파라미터에 매핑
     public Posts getDetailContents(@PathVariable Long id) {
         //PostService에 함수를 만들어줌
@@ -50,12 +49,13 @@ public class postController {
             @RequestParam boolean isAsc // true = 오름차순, false = 내림차순
     ) {
         //PostService에 함수를 만들어줌
+        // 프론트에서 받아오는 페이지 번호 값은 1부터 시작이므로 -1 을 해주어 변환함
         page -= 1;
         return postService.getLocalContents(locationName, page, size, sortBy, isAsc);
     }
 
     // 게시글 작성
-    @PostMapping("/api/contents")
+    @PostMapping("/api/post")
     // @RequestBody 객체를 본문으로 전달
     // @AuthenticationPrincipal 로그인한 사용자의 정보를 파라메터로 받음
     public Posts createPosts(@RequestBody postRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -69,7 +69,7 @@ public class postController {
     }
 
     // 게시글 수정
-    @PutMapping("/api/post/update/{id}")
+    @PutMapping("/api/post/{id}")
     // @PathVariable {템플릿 변수} 와 동일한 이름을 갖는 파라미터에 매핑
     // @RequestBody 객체를 본문으로 전달
     // @AuthenticationPrincipal 로그인한 사용자의 정보를 파라메터로 받음
@@ -81,7 +81,7 @@ public class postController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/api/post/delete/{id}")
+    @DeleteMapping("/api/post/{id}")
     // @PathVariable {템플릿 변수} 와 동일한 이름을 갖는 파라미터에 매핑
     // @AuthenticationPrincipal 로그인한 사용자의 정보를 파라메터로 받음
     public void deletecontents(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
