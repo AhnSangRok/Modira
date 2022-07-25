@@ -3,8 +3,13 @@ package com.sparta.springweb.service;
 import com.sparta.springweb.dto.postRequestDto;
 import com.sparta.springweb.dto.postResponseDto;
 import com.sparta.springweb.model.Posts;
+import com.sparta.springweb.repository.LikesRepository;
 import com.sparta.springweb.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,11 +20,11 @@ import java.util.Objects;
 public class PostsService {
 
     private final PostsRepository postsRepository;
-
+    private final LikesRepository likesRepository;
 
     // 게시글 작성
     @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
-    public Posts createPosts(postRequestDto requestDto, String username) {
+    public Posts createContents(postRequestDto requestDto, String username) {
         Posts posts1 = checkAttack(requestDto, username);
         if (posts1 != null) return posts1;
 //        // 요청받은 DTO 로 DB에 저장할 객체 만들기
@@ -46,15 +51,29 @@ public class PostsService {
     }
 
     // 게시글 조회
-    public List<Posts> getContents() {
-//        return postsRepository.findAll();
-        return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
+//    public List<Posts> getContents() {
+////        return postsRepository.findAll();
+//        return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
+//    }
+    public Page<Posts> getContents(int page, int size, String sortBy, boolean isAsc) {
+        // 페이징 및 정렬
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        // 정렬 direction 과 정렬 항목을 파라미터로 받음
+        Sort sort = Sort.by(direction, sortBy);
+        // Pageable pageable = new PageRequest(page, size, sort)와 동일
+        Pageable pageable = PageRequest.of(page, size, sort);
+        //PostRepository에 함수 생성
+        return postsRepository.findAll(pageable);
     }
+
 
     // 게시글 디테일 조회
     public Posts getDetailContents(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 ()->new IllegalArgumentException("id가 존재하지 않습니다."));
+
+        int count = likesRepository.countByPostsId(id);
+        posts.updateLikesCount(count);
         return posts;
     }
 

@@ -1,5 +1,6 @@
 package com.sparta.springweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sparta.springweb.dto.postRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,17 @@ public class Posts extends Timestamped {
     @Column
     private boolean dones = false;
 
+    @JsonIgnoreProperties({"postsList"})
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
+
+    @Transient
+    private long likesCount;
+
+    @Transient
+    private boolean likesState;
+
     public Posts(String title, String username, String contents) {
         this.title = title;
         this.userName = username;
@@ -74,6 +86,16 @@ public class Posts extends Timestamped {
         this.userName = username;
         this.contents = contents;
     }
+
+    public void updateLikesCount(int likesCount){
+        this.likesCount = likesCount;
+    }
+
+    public void updateLikesState(boolean likesState){
+
+        this.likesState = likesState;
+    }
+
 
     @Getter // private를 조회하기 위해 사용
     @MappedSuperclass // Entity가 자동으로 컬럼으로 인식합니다.
