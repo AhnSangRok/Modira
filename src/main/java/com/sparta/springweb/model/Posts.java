@@ -40,21 +40,21 @@ public class Posts extends Timestamped {
     private int partyNum;
 
     @Column
-    private int joinNum = 0;
+    private int joinNum;
 
     @Column
-    private boolean dones = false;
+    private boolean dones;
 
-    @JsonIgnoreProperties({"postsList"})
-    @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+//    @JsonIgnoreProperties({"postsList"})
+//    @JoinColumn(name = "user_id")
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    private User user;
 
-    @Transient
-    private int likesCount;
-
-    @Transient
-    private boolean likesState;
+//    @Column
+//    private int likesCount;
+//
+//    @Column
+//    private boolean likesState;
 
     public Posts(String title, String username, String contents) {
         this.title = title;
@@ -70,6 +70,8 @@ public class Posts extends Timestamped {
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
         this.imageUrl = requestDto.getImageUrl();
+        this.joinNum = 0;
+        this.dones = false;
     }
 
     public void update(postRequestDto requestDto, String userName) {
@@ -88,12 +90,11 @@ public class Posts extends Timestamped {
     }
 
     public void updateLikesCount(int likesCount){
-        this.likesCount = likesCount;
+        this.joinNum = likesCount;
     }
 
     public void updateLikesState(boolean likesState){
-
-        this.likesState = likesState;
+        this.dones = likesState;
     }
 
 
