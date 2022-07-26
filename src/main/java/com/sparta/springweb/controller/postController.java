@@ -49,10 +49,10 @@ public class postController {
     }
 
     // 지역별 게시글 조회
-    @GetMapping("/api/post/{locationName}")
-    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
-        return postsService.getLocalContents(locationName);
-    }
+//    @GetMapping("/api/post/{locationName}")
+//    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
+//        return postsService.getLocalContents(locationName);
+//    }
 
     // 게시글 작성
     @PostMapping("/api/post")
@@ -98,7 +98,6 @@ public class postController {
     public List<Likes> getLikes(@PathVariable Long contentsId){
         return likesService.findLikes(contentsId);
     }
-
 //    @DeleteMapping("/api/post/unLikes/{contentsId}")
 //    public void unLikes(@PathVariable Long contentsId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 //        if (userDetails != null) {
