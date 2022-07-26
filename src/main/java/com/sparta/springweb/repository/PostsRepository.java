@@ -10,6 +10,7 @@ import java.util.List;
 public interface PostsRepository extends JpaRepository<Posts, Long> {
     List<postResponseDto> findByLocationName(String localName);
     List<Posts> findAllByOrderByModifiedAtDesc();
+    List<Posts> findAllByOrderByCreatedAtDesc();
 
-    Posts findByUserName(String userName);
+//    Posts findByUserName(String userName);
 }
