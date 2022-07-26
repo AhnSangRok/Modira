@@ -28,8 +28,8 @@ public class LikesService {
 //        User user = userRepository.findOneByUsername(username);
         int ch = 0;
         Likes likes = new Likes(likeDto);
-        List<Likes> likesList = likesRepository.findAllByPostId(likes.getPostId());
-        Posts post = postsRepository.findByUserName(likes.getUserName());
+        List<Likes> likesList = findLikes(likes.getPostId());
+//        Posts post = postsRepository.findByUserName(likes.getUserName());
 
         for (Likes check : likesList) {
             if (Objects.equals(check.getUserName(), likes.getUserName())){
@@ -42,7 +42,7 @@ public class LikesService {
             likesRepository.save(likes);
         }
 //        postsRepository.save(post);
-        post.updateLikesCount(likesList.size());
+//        post.updateLikesCount(likesList.size());
 //        likesRepository.likes(contentsId,user.getId());
     }
 
