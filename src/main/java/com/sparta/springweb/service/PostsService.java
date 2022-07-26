@@ -2,7 +2,6 @@ package com.sparta.springweb.service;
 
 import com.sparta.springweb.dto.postRequestDto;
 import com.sparta.springweb.dto.postResponseDto;
-import com.sparta.springweb.model.Likes;
 import com.sparta.springweb.model.Posts;
 import com.sparta.springweb.repository.LikesRepository;
 import com.sparta.springweb.repository.PostsRepository;
@@ -52,23 +51,9 @@ public class PostsService {
     }
 
     //     게시글 조회
-    @Transactional
     public List<Posts> getContents() {
 //        return postsRepository.findAll();
-//        List<Likes> likes = likesRepository.findAll();
-        List<Posts> posts = postsRepository.findAll();
-        for (Posts post : posts){
-            List<Likes> likes = likesRepository.findAllByPostId(post.getId());
-//            Posts post = postsRepository.findById(like.getPostId()).orElseThrow(() -> new IllegalArgumentException("해당하는 ID가 없습니다."));
-            post.updateLikesCount(likes.size());
-            if (likes.size()==post.getPartyNum()){
-                post.updateLikesState(true);
-            }
-            postsRepository.save(post);
-        }
-
-
-        return postsRepository.findAllByOrderByCreatedAtDesc(); //제작 시간순으로 정렬
+        return postsRepository.findAllByOrderByModifiedAtDesc(); //등록 시간순으로 정렬
     }
 //    public Page<Posts> getContents(int page, int size, String sortBy, boolean isAsc) {
 //        // 페이징 및 정렬
@@ -120,9 +105,5 @@ public class PostsService {
         if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
             postsRepository.deleteById(id);
         }else new IllegalArgumentException("작성한 유저가 아닙니다.");
-    }
-
-    public void postLikes(List<Likes> likes){
-
     }
 }

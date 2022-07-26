@@ -5,7 +5,6 @@ import com.sparta.springweb.dto.postRequestDto;
 import com.sparta.springweb.dto.postResponseDto;
 import com.sparta.springweb.model.Likes;
 import com.sparta.springweb.model.Posts;
-import com.sparta.springweb.repository.PostsRepository;
 import com.sparta.springweb.security.UserDetailsImpl;
 import com.sparta.springweb.service.LikesService;
 import com.sparta.springweb.service.PostsService;
@@ -50,10 +49,10 @@ public class postController {
     }
 
     // 지역별 게시글 조회
-//    @GetMapping("/api/post/{locationName}")
-//    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
-//        return postsService.getLocalContents(locationName);
-//    }
+    @GetMapping("/api/post/{locationName}")
+    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
+        return postsService.getLocalContents(locationName);
+    }
 
     // 게시글 작성
     @PostMapping("/api/post")
@@ -92,7 +91,6 @@ public class postController {
     public void likes(@PathVariable Long contentsId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails != null) {
             LikeDto likeDto = new LikeDto(contentsId, userDetails.getUsername());
-
             likesService.likes(likeDto);
         }
     }
