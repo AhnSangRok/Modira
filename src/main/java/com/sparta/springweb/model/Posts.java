@@ -31,9 +31,6 @@ public class Posts extends Timestamped {
     private String contents;
 
     @Column(nullable = false)
-    private String imageUrl;
-
-    @Column(nullable = false)
     private String locationName;
 
     @Column(nullable = false)
@@ -44,17 +41,6 @@ public class Posts extends Timestamped {
 
     @Column
     private boolean dones;
-
-//    @JsonIgnoreProperties({"postsList"})
-//    @JoinColumn(name = "user_id")
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    private User user;
-
-//    @Column
-//    private int likesCount;
-//
-//    @Column
-//    private boolean likesState;
 
     public Posts(String title, String username, String contents) {
         this.title = title;
@@ -69,7 +55,6 @@ public class Posts extends Timestamped {
         this.contents = requestDto.getContents();
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
-        this.imageUrl = requestDto.getImageUrl();
         this.joinNum = 0;
         this.dones = false;
     }
@@ -80,7 +65,6 @@ public class Posts extends Timestamped {
         this.contents = requestDto.getContents();
         this.locationName = requestDto.getLocationName();
         this.partyNum = requestDto.getPartyNum();
-        this.imageUrl = requestDto.getImageUrl();
     }
 
     public Posts(postRequestDto requestDto, String username, String contents) {

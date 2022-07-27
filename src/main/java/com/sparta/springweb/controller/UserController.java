@@ -3,11 +3,11 @@ package com.sparta.springweb.controller;
 import com.sparta.springweb.dto.LoginRequestDto;
 import com.sparta.springweb.dto.SignupRequestDto;
 import com.sparta.springweb.jwt.JwtTokenProvider;
+import com.sparta.springweb.security.UserDetailsImpl;
 import com.sparta.springweb.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,12 +21,12 @@ public class UserController {
 
     // 회원 로그인
     @PostMapping("/user/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto) {
+    public String login(@RequestBody LoginRequestDto loginRequestDto) throws IllegalAccessException {
         if (userService.login(loginRequestDto)) {
             String token = jwtTokenProvider.createToken(loginRequestDto.getUsername());
             return token;
         } else {
-            return "닉네임 또는 패스워드를 확인해주세요";
+            throw new IllegalAccessException("아이디 비밀번호를 확인해 주세요");
         }
     }
 
@@ -42,5 +42,12 @@ public class UserController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         return userService.logout(request);
+    }
+
+    @PostMapping("/user/userinfo")
+    @ResponseBody
+    public String getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String username = userDetails.getUser().getUsername();
+        return username;
     }
 }

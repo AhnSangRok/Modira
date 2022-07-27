@@ -16,14 +16,6 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @JoinColumn(name = "posts_id")
-//    @ManyToOne
-//    private Posts posts;
-//
-//    @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties({"postsList"})
-//    @ManyToOne
-//    private User user;
     @Column(nullable = false)
     private Long postId;
     @Column(nullable = false)

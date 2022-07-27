@@ -32,6 +32,9 @@
                 }
             });
         }
+        const axios = require('axios').default;
+
+        // Make a request for a user with a given ID
     </script>
     <style>
         body {
@@ -82,6 +85,7 @@
                 <div class="login-id-label">비밀번호</div>
                 <input type="password" name="password" class="login-input-box">
                 <button id="login-id-submit">로그인</button>
+                <button onclick="getPost()">확인</button>
             </form>
         </div>
     </div>

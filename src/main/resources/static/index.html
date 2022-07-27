@@ -10,12 +10,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>바다 위 대나무 숲</title>
     <!--    font-family: 'Jua', sans-serif;-->
     <script>
         $(document).ready(function () {
-            getMessages();
+            getPost();
         })
 
         function getMessages() {
@@ -65,6 +65,23 @@
                          </a>
 
                         </div>`;
+        }
+        function getPost() {
+            let test = window.axios.get('http://sparta-9kyo.shop/api/post')
+
+            test
+                .then(function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        let row = response[i];
+                        let title = row.title;
+                        let partyNum = row.partyNum;
+                        let imageUrl = row.imageUrl;
+                        console.log(title, partyNum, imageUrl);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
 
     </script>
@@ -329,6 +346,7 @@
     <div class="to-write">
         <li sec:authorize="isAuthenticated()">
             <button type="button" class="btn btn-primary" onclick="location.href='write.html'"><b>글 쓰 기</b></button>
+            <button type="button" class="btn btn-primary" onclick=getPost()><b>글보기</b></button>
         </li>
     </div>
     <div id="cards-box" class="area-read">
