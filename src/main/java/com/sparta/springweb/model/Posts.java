@@ -87,15 +87,6 @@ public class Posts extends Timestamped {
         this.contents = contents;
     }
 
-    public void updateLikesCount(int likesCount){
-        this.likesCount = likesCount;
-    }
-
-    public void updateLikesState(boolean likesState){
-
-        this.likesState = likesState;
-    }
-
 
     @Getter // private를 조회하기 위해 사용
     @MappedSuperclass // Entity가 자동으로 컬럼으로 인식합니다.

@@ -10,13 +10,19 @@ import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails {
 
+
+// 상시 db에서 조회하여 가져와서 비효율적 =>
+//     private Long userId;
+//     private String userName;
+// 로 리펙터링하여 db에서 찾지 않도록 하는 것이 좋음
     private final User user;
+
 
     public UserDetailsImpl(User user) {
         this.user = user;
     }
 
-        public User getUser() {
+    public User getUser() {
         return user;
     }
 

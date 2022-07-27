@@ -2,15 +2,14 @@ package com.sparta.springweb.service;
 
 import com.sparta.springweb.dto.postRequestDto;
 import com.sparta.springweb.dto.postResponseDto;
+import com.sparta.springweb.exception.ErrorCode;
+import com.sparta.springweb.exception.PostException;
 import com.sparta.springweb.model.Posts;
 import com.sparta.springweb.repository.LikesRepository;
 import com.sparta.springweb.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -70,7 +69,8 @@ public class PostsService {
     // 게시글 디테일 조회
     public Posts getDetailContents(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(
-                ()->new IllegalArgumentException("id가 존재하지 않습니다."));
+                ()-> new PostException(ErrorCode.NOT_FOUND_POSTID));
+//                ()->new IllegalArgumentException("id가 존재하지 않습니다."));
 
 //        int count = likesRepository.countByPostsId(id);
 //        posts.updateLikesCount(count);
@@ -87,23 +87,25 @@ public class PostsService {
     @Transactional
     public Posts update(Long id, postRequestDto requestDto, String userName, Long userId) {
         Posts posts = postsRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
+                ()-> new PostException(ErrorCode.NOT_FOUND_POSTID));
+//                () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String writer = posts.getUserName();
-        Long writerId = posts.getId();
-        if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
+        if (Objects.equals(writer, userName)) {
             posts.update(requestDto, userName);
-        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
+        } else new PostException(ErrorCode.NOT_FOUND_USERID);
+//        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
         return posts;
     }
 
     // 게시글 삭제
     public void deleteContent(Long id, String userName, Long userId) {
         Posts posts = postsRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
+                ()-> new PostException(ErrorCode.NOT_FOUND_POSTID));
+//                () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String writer = posts.getUserName();
-        Long writerId = posts.getId();
-        if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
+        if (Objects.equals(writer, userName)) {
             postsRepository.deleteById(id);
-        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
+        } else new PostException(ErrorCode.NOT_FOUND_USERID);
+//        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
     }
 }

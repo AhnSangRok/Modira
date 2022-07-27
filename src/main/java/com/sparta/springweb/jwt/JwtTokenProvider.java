@@ -42,7 +42,7 @@ public class JwtTokenProvider {
     // JWT 토큰 생성(로그인 서비스에 사용)
     public String createToken(String userPk) {
         // primeKey 로 userName 을 저장
-        Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
+        Claims claims = Jwts.claims().setSubject(userPk);// JWT payload 에 저장되는 정보단위
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
