@@ -15,7 +15,7 @@ public class postResponseDto {
     private String title;
     private String userName;
     private String contents;
-    private String locationName;
+    private int locationName;
     private int partyNum;
     private int joinNum;
     private boolean dones;
@@ -23,7 +23,7 @@ public class postResponseDto {
     private final LocalDateTime modifiedAt;
 
 
-    public postResponseDto(Long id, String title, String userName, String contents, String locationName, int partyNum, int joinNum, boolean done, LocalDateTime modifiedAt, int countReply) {
+    public postResponseDto(Long id, String title, String userName, String contents, int locationName, int partyNum, int joinNum, boolean done, LocalDateTime modifiedAt, int countReply) {
         this.id = id;
         this.title = title;
         this.userName = userName;

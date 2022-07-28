@@ -38,7 +38,7 @@ MODIRA - 대구 사람들의 모임
 - [시연영상]()
 - [Team notion](https://www.notion.so/SA-2-6b7a177966d849e99425a7bceb5d7ba2#49ab9ad773c94ceebf61fa3f773112c6)
 - [Github Back-End repo](https://github.com/AhnSangRok/Modira)
-- [Github Front-End repo]()
+- [Github Front-End repo](https://github.com/whtnqls124578/react_miniproject)
 
 <br>
 

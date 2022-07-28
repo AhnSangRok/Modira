@@ -9,7 +9,8 @@ import java.util.List;
 
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {
-    Page<Posts> findAllByLocationName(String locationName, Pageable pageable);
+    Page<Posts> findAllByLocationName(int locationName, Pageable pageable);
+//    List<Posts> findAllByLocationName(int locationName);
     List<Posts> findAllByOrderByCreatedAtDesc();
 //    List<Posts> findAllByOrderByModifiedAtDesc();
 //    Posts findByUserName(String userName);

@@ -17,17 +17,6 @@ public class postController {
 
     private final PostsService postsService;
 
-//    @GetMapping("/api/post")
-//    public Page<Posts> getContents(
-//            @RequestParam int page, // 페이지 번호
-//            @RequestParam int size // 한 페이지에 보여줄 게시물 개수
-//    ) {
-//        //PostService에 함수를 만들어줌
-//        // 프론트에서 받아오는 페이지 번호 값은 1부터 시작이므로 -1 을 해주어 변환함
-//        page -= 1;
-//        return postsService.getContents(page, size);
-//    }
-
 //     게시글 조회
     @GetMapping("/api/post")
     public List<Posts> getContents() {
@@ -43,10 +32,14 @@ public class postController {
 
 //     지역별 게시글 조회
     @GetMapping("/api/post/local/{locationName}")
-    public Page<Posts> getLocalContents(@PathVariable String locationName, @RequestParam int page, @RequestParam int size) {
+    public Page<Posts> getLocalContents(@PathVariable("locationName") int locationName, @RequestParam int page, @RequestParam int size) {
         page -= 1;
         return postsService.getLocalContents(locationName, page, size);
     }
+//    @GetMapping("/api/post/local/{locationName}")
+//        public List<Posts> getLocalContents(@PathVariable("locationName") int locationName) {
+//            return postsService.getLocalContents(locationName);
+//        }
 
     // 게시글 작성
     @PostMapping("/api/post")

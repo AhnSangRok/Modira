@@ -9,5 +9,5 @@ public class postRequestDto {
     private String title;
     private String contents;
     private int partyNum;
-    private String locationName;
+    private int locationName;
 }

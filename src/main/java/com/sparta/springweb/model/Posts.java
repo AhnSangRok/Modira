@@ -31,7 +31,7 @@ public class Posts extends Timestamped {
     private String contents;
 
     @Column(nullable = false)
-    private String locationName;
+    private int locationName;
 
     @Column(nullable = false)
     private int partyNum;
