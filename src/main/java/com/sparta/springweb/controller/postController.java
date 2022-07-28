@@ -1,12 +1,15 @@
 package com.sparta.springweb.controller;
 
+import com.sparta.springweb.dto.LikeDto;
 import com.sparta.springweb.dto.postRequestDto;
 import com.sparta.springweb.dto.postResponseDto;
+import com.sparta.springweb.model.Likes;
 import com.sparta.springweb.model.Posts;
 import com.sparta.springweb.security.UserDetailsImpl;
 import com.sparta.springweb.service.LikesService;
 import com.sparta.springweb.service.PostsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,14 +44,15 @@ public class postController {
     // 게시글 디테일 조회
     @GetMapping("/api/post/{id}")
     public Posts getDetailContents(@PathVariable Long id) {
-        return postsService.getDetailContents(id);
+        Posts posts = postsService.getDetailContents(id);
+        return posts;
     }
 
     // 지역별 게시글 조회
-    @GetMapping("/api/post/{locationName}")
-    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
-        return postsService.getLocalContents(locationName);
-    }
+//    @GetMapping("/api/post/{locationName}")
+//    public List<postResponseDto> getLocalContents(@PathVariable String locationName) {
+//        return postsService.getLocalContents(locationName);
+//    }
 
     // 게시글 작성
     @PostMapping("/api/post")
@@ -81,4 +85,24 @@ public class postController {
             postsService.deleteContent(id, username, userId);
         }
     }
+
+    //좋아요
+    @PostMapping("/api/likes/{contentsId}")
+    public void likes(@PathVariable Long contentsId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if (userDetails != null) {
+            LikeDto likeDto = new LikeDto(contentsId, userDetails.getUsername());
+            likesService.likes(likeDto);
+        }
+    }
+    @GetMapping("/api/likes/{contentsId}")
+    public List<Likes> getLikes(@PathVariable Long contentsId){
+        return likesService.findLikes(contentsId);
+    }
+//    @DeleteMapping("/api/post/unLikes/{contentsId}")
+//    public void unLikes(@PathVariable Long contentsId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        if (userDetails != null) {
+//            likesService.unLikes(contentsId, userDetails.getUsername());
+//        }
+//    }
+
 }
