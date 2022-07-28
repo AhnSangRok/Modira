@@ -1,5 +1,5 @@
 <div align = center>
-<img src="" width="300" height="300" />
+<img src="src/main/resources/static/images/main.jpg" width="300" height="300" />
 </div>
 
 ## Modira 소개
@@ -37,7 +37,7 @@ MODIRA - 대구 사람들의 모임
 
 - [시연영상]()
 - [Team notion](https://www.notion.so/SA-2-6b7a177966d849e99425a7bceb5d7ba2#49ab9ad773c94ceebf61fa3f773112c6)
-- [Github Back-End repo]()
+- [Github Back-End repo](https://github.com/AhnSangRok/Modira)
 - [Github Front-End repo]()
 
 <br>
@@ -45,8 +45,7 @@ MODIRA - 대구 사람들의 모임
 ## 주요 기능
 - 제공페이지 : 로그인, 회원가입, 메인페이지, POST 작성 페이지, POST 상세페이지
 - JWT를 활용한 회원가입 & 로그인
-- 유저의 개인정보(닉네임, 프로필사진) 업로드 & 수정 가능
-- axios와 redux를 통해 기본적인 CRUD 기능
+- 게시물 CRUD 기능 
 
 <br>
 
