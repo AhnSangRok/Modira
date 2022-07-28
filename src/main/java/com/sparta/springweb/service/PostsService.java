@@ -118,13 +118,15 @@ public class PostsService {
     }
 
     // likecnt 리펙토링
-    public void pluslikecnt(Long postId) {
+    public void     pluslikecnt(Long postId) {
         Posts posts = postsRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
         );
         if (posts.getJoinNum() < posts.getPartyNum()) {
+            posts.updateLikesState(false);
             posts.PlusLikesCnt();
         } else {
+            posts.updateLikesState(true);
             throw new IllegalArgumentException("참여가능인원이 모두 모집되었습니다.");
         }
     }
@@ -133,6 +135,7 @@ public class PostsService {
             Posts posts = postsRepository.findById(postId).orElseThrow(
                     () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
             );
+            posts.updateLikesState(false);
             posts.minusLikeCnt();
         }
     }
