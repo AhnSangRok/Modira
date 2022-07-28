@@ -17,18 +17,27 @@ public class LikesService {
     @Transactional
     public void likes(LikeDto likeDto) {
 
-//        int ch = 0;
+//      boolean ch = false;
         Likes likes = new Likes(likeDto);
 //        List<Likes> likesList = findLikes(likes.getPostId());
 
 //        for (Likes check : likesList) {
 //            if (Objects.equals(check.getUserName(), likes.getUserName())){
 //                likesRepository.deleteById(check.getId());
-//                ch = 1;
+//                ch = true;
 //                break;
 //            }
 //        }
 
+//        Posts post = postsRepository.findById(likes.getPostId()).orElseThrow(() -> new IllegalArgumentException("해당하는 ID가 없습니다."));
+//        if (ch ){
+//            if(post.getJoinNum() >= post.getPartyNum()){
+//                throw new IllegalArgumentException("참여가능인원이 모두 모집되었습니다.");
+//            }else{
+//                likesRepository.save(likes);
+//            }
+//        }
+//    }
         boolean exists = likesRepository.existsByPostIdAndUserName(likeDto.getPostId(), likeDto.getUserName());
         if (exists) {
             postsService.minuslikecnt(likeDto.getPostId());
@@ -42,15 +51,7 @@ public class LikesService {
 
 
 
-//        Posts post = postsRepository.findById(likes.getPostId()).orElseThrow(() -> new IllegalArgumentException("해당하는 ID가 없습니다."));
-//        if (ch == 0){
-//            if(post.getJoinNum() >= post.getPartyNum()){
-//                throw new IllegalArgumentException("참여가능인원이 모두 모집되었습니다.");
-//            }else{
-//                likesRepository.save(likes);
-//            }
-//        }
-//    }
+
 
 //    @Transactional
 //    public List<Likes> findLikes(Long postId) {

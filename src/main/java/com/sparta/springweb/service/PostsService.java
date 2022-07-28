@@ -30,7 +30,7 @@ public class PostsService {
         return posts;
     }
 
-    // xxs 공격 판별 메서드
+    // xss(크로스 사이트 스크핍팅) 공격 판별 메서드
     private Posts checkAttack(postRequestDto requestDto, String username) {
         String contentsCheck = requestDto.getContents();
         String titleCheck = requestDto.getTitle();
@@ -118,14 +118,17 @@ public class PostsService {
     }
 
     // likecnt 리펙토링
-    public void     pluslikecnt(Long postId) {
+    public void pluslikecnt(Long postId) {
+        // db에 있는 postId를 통해 posts의 내용을 가져옴
         Posts posts = postsRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
         );
+        // if 문이 true 라면 likecnt +1와 likestate 를 false 로 변경
         if (posts.getJoinNum() < posts.getPartyNum()) {
             posts.updateLikesState(false);
             posts.PlusLikesCnt();
         } else {
+            // false 라면 likestate 를 true 로 반환, likecnt는 유지
             posts.updateLikesState(true);
             throw new IllegalArgumentException("참여가능인원이 모두 모집되었습니다.");
         }
