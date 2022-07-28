@@ -1,5 +1,5 @@
 <div align = center>
-<img src="src/main/resources/static/images/main.jpg" width="700" height="300" />
+<img src="src/main/resources/static/images/main.jpg" width="700" height="400" />
 </div>
 
 ## Modira 소개
