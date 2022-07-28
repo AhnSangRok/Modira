@@ -21,13 +21,12 @@ public class UserController {
 
     // 회원 로그인
     @PostMapping("/user/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto) throws IllegalAccessException {
+    public String login(@RequestBody LoginRequestDto loginRequestDto) {
         if (userService.login(loginRequestDto)) {
             String token = jwtTokenProvider.createToken(loginRequestDto.getUsername());
             return token;
-        } else {
-            throw new IllegalAccessException("아이디 비밀번호를 확인해 주세요");
         }
+        throw new IllegalArgumentException("아이디 비밀번호를 확인해 주세요");
     }
 
     // 회원 가입 요청 처리

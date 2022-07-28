@@ -1,12 +1,12 @@
 package com.sparta.springweb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sparta.springweb.dto.postRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -79,6 +79,14 @@ public class Posts extends Timestamped {
 
     public void updateLikesState(boolean likesState){
         this.dones = likesState;
+    }
+
+    // likecnt 리펙토링
+    public void PlusLikesCnt() {
+        this.joinNum += 1;
+    }
+    public void minusLikeCnt() {
+        this.joinNum -= 1;
     }
 
 

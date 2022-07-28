@@ -1,19 +1,15 @@
 package com.sparta.springweb.service;
 
 import com.sparta.springweb.dto.postRequestDto;
-import com.sparta.springweb.dto.postResponseDto;
-import com.sparta.springweb.model.Likes;
 import com.sparta.springweb.model.Posts;
-import com.sparta.springweb.repository.LikesRepository;
 import com.sparta.springweb.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -21,7 +17,7 @@ import java.util.Objects;
 public class PostsService {
 
     private final PostsRepository postsRepository;
-    private final LikesRepository likesRepository;
+//    private final LikesRepository likesRepository;
 
     // 게시글 작성
     @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
@@ -38,12 +34,12 @@ public class PostsService {
     private Posts checkAttack(postRequestDto requestDto, String username) {
         String contentsCheck = requestDto.getContents();
         String titleCheck = requestDto.getTitle();
-        if (contentsCheck.contains("script")||contentsCheck.contains("<")||contentsCheck.contains(">")){
-            Posts posts = new Posts(requestDto, username,"잘못된 입력입니다(XSS 공격금지)");
+        if (contentsCheck.contains("script") || contentsCheck.contains("<") || contentsCheck.contains(">")) {
+            Posts posts = new Posts(requestDto, username, "잘못된 입력입니다(XSS 공격금지)");
             postsRepository.save(posts);
             return posts;
         }
-        if (titleCheck.contains("script")||titleCheck.contains("<")||titleCheck.contains(">")) {
+        if (titleCheck.contains("script") || titleCheck.contains("<") || titleCheck.contains(">")) {
             Posts posts = new Posts("잘못된 입력입니다(XSS 공격금지)", username, "잘못된 입력입니다(XSS 공격금지)");
             postsRepository.save(posts);
             return posts;
@@ -52,20 +48,20 @@ public class PostsService {
     }
 
     //     게시글 조회
-    @Transactional
-    public List<Posts> getContents() {
-
-        List<Posts> posts = postsRepository.findAll();
-        for (Posts post : posts){
-            List<Likes> likes = likesRepository.findAllByPostId(post.getId());
-            post.updateLikesCount(likes.size());
-            if (likes.size()==post.getPartyNum()){
-                post.updateLikesState(true);
-            }
-            postsRepository.save(post);
-        }
-        return postsRepository.findAllByOrderByCreatedAtDesc(); //제작 시간순으로 정렬
-    }
+//    @Transactional
+//    public List<Posts> getContents() {
+//
+//        List<Posts> posts = postsRepository.findAll();
+//        for (Posts post : posts) {
+//            List<Likes> likes = likesRepository.findAllByPostId(post.getId());
+//            post.updateLikesCount(likes.size());
+//            if (likes.size() == post.getPartyNum()) {
+//                post.updateLikesState(true);
+//            }
+//            postsRepository.save(post);
+//        }
+//        return postsRepository.findAllByOrderByCreatedAtDesc(); //제작 시간순으로 정렬
+//    }
 
 //    public Page<Posts> getContents(int page, int size) {
 //        // 페이징 및 정렬
@@ -89,7 +85,7 @@ public class PostsService {
     // 게시글 디테일 조회
     public Posts getDetailContents(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(
-                ()->new IllegalArgumentException("id가 존재하지 않습니다."));
+                () -> new IllegalArgumentException("id가 존재하지 않습니다."));
         return posts;
     }
 
@@ -107,7 +103,7 @@ public class PostsService {
         String writer = posts.getUserName();
         if (Objects.equals(writer, userName)) {
             posts.update(requestDto, userName);
-        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
+        } else new IllegalArgumentException("작성한 유저가 아닙니다.");
         return posts;
     }
 
@@ -116,9 +112,27 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String writer = posts.getUserName();
-        if (Objects.equals(writer, userName) ) {
+        if (Objects.equals(writer, userName)) {
             postsRepository.deleteById(id);
-        }else new IllegalArgumentException("작성한 유저가 아닙니다.");
+        } else new IllegalArgumentException("작성한 유저가 아닙니다.");
     }
 
-}
+    // likecnt 리펙토링
+    public void pluslikecnt(Long postId) {
+        Posts posts = postsRepository.findById(postId).orElseThrow(
+                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+        );
+        if (posts.getJoinNum() < posts.getPartyNum()) {
+            posts.PlusLikesCnt();
+        } else {
+            throw new IllegalArgumentException("참여가능인원이 모두 모집되었습니다.");
+        }
+    }
+
+        public void minuslikecnt (Long postId){
+            Posts posts = postsRepository.findById(postId).orElseThrow(
+                    () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+            );
+            posts.minusLikeCnt();
+        }
+    }

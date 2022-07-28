@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 public class postController {
@@ -29,10 +27,10 @@ public class postController {
 //    }
 
 //     게시글 조회
-    @GetMapping("/api/post")
-    public List<Posts> getContents() {
-        return postsService.getContents();
-    }
+//    @GetMapping("/api/post")
+//    public List<Posts> getContents() {
+//        return postsService.getContents();
+//    }
 
     // 게시글 디테일 조회
     @GetMapping("/api/post/{id}")
