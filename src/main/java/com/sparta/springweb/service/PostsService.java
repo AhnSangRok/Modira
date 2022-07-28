@@ -7,6 +7,10 @@ import com.sparta.springweb.model.Posts;
 import com.sparta.springweb.repository.LikesRepository;
 import com.sparta.springweb.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -50,31 +54,35 @@ public class PostsService {
     //     게시글 조회
     @Transactional
     public List<Posts> getContents() {
-//        return postsRepository.findAll();
-//        List<Likes> likes = likesRepository.findAll();
+
         List<Posts> posts = postsRepository.findAll();
         for (Posts post : posts){
             List<Likes> likes = likesRepository.findAllByPostId(post.getId());
-//            Posts post = postsRepository.findById(like.getPostId()).orElseThrow(() -> new IllegalArgumentException("해당하는 ID가 없습니다."));
             post.updateLikesCount(likes.size());
             if (likes.size()==post.getPartyNum()){
                 post.updateLikesState(true);
             }
             postsRepository.save(post);
         }
-
-
         return postsRepository.findAllByOrderByCreatedAtDesc(); //제작 시간순으로 정렬
     }
-//    public Page<Posts> getContents(int page, int size, String sortBy, boolean isAsc) {
+
+//    public Page<Posts> getContents(int page, int size) {
 //        // 페이징 및 정렬
-//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-//        // 정렬 direction 과 정렬 항목을 파라미터로 받음
-//        Sort sort = Sort.by(direction, sortBy);
+//
 //        // Pageable pageable = new PageRequest(page, size, sort)와 동일
-//        Pageable pageable = PageRequest.of(page, size, sort);
+//        Pageable pageable = PageRequest.of(page, size);
 //        //PostRepository에 함수 생성
-//        return postsRepository.findAll(pageable);
+//        List<Posts> posts = postsRepository.findAll();
+//        for (Posts post : posts){
+//            List<Likes> likes = likesRepository.findAllByPostId(post.getId());
+//            post.updateLikesCount(likes.size());
+//            if (likes.size()==post.getPartyNum()){
+//                post.updateLikesState(true);
+//            }
+//            postsRepository.save(post);
+//        }
+//        return postsRepository.findAllByOrderByCreatedAtDesc(pageable); //제작 시간순으로 정렬
 //    }
 
 
@@ -82,38 +90,33 @@ public class PostsService {
     public Posts getDetailContents(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 ()->new IllegalArgumentException("id가 존재하지 않습니다."));
-
-//        int count = likesRepository.countByPostsId(id);
-//        posts.updateLikesCount(count);
         return posts;
     }
 
     // 각 지역별 게시글 조회
-    public List<postResponseDto> getLocalContents(String locationName) {
-        List<postResponseDto> postResponseDtoList = postsRepository.findByLocationName(locationName);
-        return postResponseDtoList;
+    public Page<Posts> getLocalContents(String locationName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postsRepository.findAllByLocationName(locationName, pageable);
     }
 
     // 게시글 수정 기능
     @Transactional
-    public Posts update(Long id, postRequestDto requestDto, String userName, Long userId) {
+    public Posts update(Long id, postRequestDto requestDto, String userName) {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String writer = posts.getUserName();
-        Long writerId = posts.getId();
-        if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
+        if (Objects.equals(writer, userName)) {
             posts.update(requestDto, userName);
         }else new IllegalArgumentException("작성한 유저가 아닙니다.");
         return posts;
     }
 
     // 게시글 삭제
-    public void deleteContent(Long id, String userName, Long userId) {
+    public void deleteContent(Long id, String userName) {
         Posts posts = postsRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
         String writer = posts.getUserName();
-        Long writerId = posts.getId();
-        if (Objects.equals(writer, userName) && Objects.equals(writerId, userId)) {
+        if (Objects.equals(writer, userName) ) {
             postsRepository.deleteById(id);
         }else new IllegalArgumentException("작성한 유저가 아닙니다.");
     }
