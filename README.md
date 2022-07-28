@@ -35,7 +35,7 @@ MODIRA - 대구 사람들의 모임
 
 #### 🔗 link
 
-- [시연영상]()
+- [시연영상](https://youtu.be/zuK9re3IYMM)
 - [Team notion](https://www.notion.so/SA-2-6b7a177966d849e99425a7bceb5d7ba2#49ab9ad773c94ceebf61fa3f773112c6)
 - [Github Back-End repo](https://github.com/AhnSangRok/Modira)
 - [Github Front-End repo](https://github.com/whtnqls124578/react_miniproject)
@@ -51,6 +51,6 @@ MODIRA - 대구 사람들의 모임
 
 ## 사용한 기술스택
 # 프론트엔드
-- React, Axios
+- React, Axios, Redux
 # 백엔드
 - Spring, JPA, MYSQL, GRADLE, GitHub, AWS, Spring Security
