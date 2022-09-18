@@ -72,17 +72,5 @@ public class ContentsController {
         }
     }
 
-    //좋아요 
-    @PostMapping("/api/post/likes/{id}")
-    public void likes(@PathVariable Long contentsid, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        if (userDetails != null) {
-            likesService.likes(contentsid, userDetails.getUsername());
-        }
-    }
-    @DeleteMapping("/api/post/unLikes/{id}")
-    public void unLikes(@PathVariable Long contentsid, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if (userDetails != null) {
-            likesService.unLikes(contentsid, userDetails.getUsername());
-        }
-    }
+
 }
